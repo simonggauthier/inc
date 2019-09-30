@@ -94,19 +94,8 @@ class CharacterWindow {
 		var $attrs = this.ui.$attributes.findAll('.attribute');
 
 		for (var i = 0; i < $attrs.length; i++) {
-			console.log(c.attributes[i])
 			$attrs[i].findElement('.value').val(c.attributes[i]);
 		}
-	}
-
-	createStatRow (name, title, value) {
-		var $row = $clone('#stat-row');
-
-		$row.addClass(name);
-		$row.find('.label').val(title);
-		$row.find('.value').val(value);
-
-		return $row;
 	}
 
 	updateStatRow (name, value) {
