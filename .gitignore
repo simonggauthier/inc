@@ -1,1 +1,3 @@
-res/img/*.png
+node_modules/
+*.sublime-project
+*.sublime-workspace

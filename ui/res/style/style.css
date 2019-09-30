@@ -1,0 +1,96 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+ul {
+	list-style: none;
+}
+
+body {
+	background-color: #222;
+	color: #fff;
+	font-family: 'MedievalSharp', cursive;
+	font-size: 22px;
+}
+
+h1 {
+	font-size: 2em;
+}
+
+.header {
+	padding: 10px;
+}
+
+.header > img {
+	float:left;
+	width: 50px;
+	height: 50px;
+}
+
+.header > .title {
+	padding-top: 2px;
+}
+
+#control {
+	margin-bottom: 20px;
+}
+
+.window {
+
+}
+
+.window .title {
+	border: 1px solid #aaa;
+	padding: 0 3px 0 3px;
+}
+
+.window .content {
+	font-size: 0.8em;
+	border: 1px solid #aaa;
+	margin-top: 5px;
+	padding: 3px;
+}
+
+.label {
+	font-weight: bold;
+}
+
+.value {
+	font-size: 0.8em;
+}
+
+#game {
+	font-family: 'consolas';
+	padding: 10px;
+}
+
+#character > .window {
+	width: 300px;
+}
+
+.stat {
+	margin-bottom: 5px;
+}
+
+.stat-s {
+	font-size: 0.8em;
+}
+
+.stat-s:after {
+	content: '';
+	display: block;
+	clear: both;
+	margin-bottom: 2px;
+}
+
+.stat-s .label {
+	float: left;
+	margin-right: 10px;
+}
+
+.stat-s .value {
+	float: right;
+	width: 60%;
+	font-size: 1em;
+}

@@ -1,0 +1,61 @@
+html
+	head
+		title Incremental Game
+
+		// Favicon
+		link(rel='icon', href='/res/img/icon.png')
+
+		// Fonts
+		link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=MedievalSharp&display=swap')
+
+		// Style
+		link(rel='stylesheet', href='/res/style/style.css')
+
+		// Librairies
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js')
+
+	body
+		.header
+			img(src='/res/img/icon.png')
+			h1.title Incremental Game
+
+		#game
+			#character
+				.window
+					.title Character
+
+					.content
+						button#btn-lvl-up Level Up
+						
+						ul.stats
+							li.stat.level
+								.label Level
+								.value 0
+							li.stat.class
+								.label Class
+								.value None
+							li.stat.attributes
+								.label Attributes
+								ul
+									li.stat-s.attribute.strength
+										.label Strength
+										.value 0
+									li.stat-s.attribute.strength
+										.label Dexterity
+										.value 0
+									li.stat-s.attribute.strength
+										.label Endurance
+										.value 0
+									li.stat-s.attribute.strength
+										.label Intelligence
+										.value 0
+									li.stat-s.attribute.strength
+										.label Charisma
+										.value 0
+
+	script.
+		requirejs.config({
+			baseUrl: '/app'
+		});
+
+	script(src='/app/main.js')
