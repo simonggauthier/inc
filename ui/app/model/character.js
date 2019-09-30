@@ -1,19 +1,22 @@
-define(['model/character-class'], (CharacterClass) => {
+define(['model/character-class', 'model/attributes'], (CharacterClass, Attributes) => {
 	'use strict';
 
 	class Character {
 		constructor () {
 			this.level = 1;
-			this.characterClass = new CharacterClass.classes.Wizard();
-			this.attributes = this.characterClass.createStartingAttributes();
+			this.characterClass = null;
+			this.attributes = new Attributes();
+		}
 
-			console.log(this.attributes);
+		assignCharacterClass (characterClass) {
+			this.characterClass = characterClass;
+			this.attributes = this.characterClass.createStartingAttributes();
 		}
 
 		levelUp () {
 			this.level++;
 
-			this.attributes.add(this.characterClass.attributesLevelDelta);
+			this.attributes.add(this.characterClass.attributes.levelDelta);
 		}
 	}
 

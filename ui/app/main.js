@@ -1,5 +1,11 @@
-requirejs(['game'], (Game) => {
+requirejs(['game', 'simulation'], (Game, Simulation) => {
 	'use strict';
 
-	new Game();
+	var game = new Game();
+
+	game.start().then(function () {
+		new Simulation(game).start();
+	});
+
+	window.game = game;
 });

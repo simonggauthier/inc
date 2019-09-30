@@ -2,31 +2,19 @@ define(['model/attributes'], (Attributes) => {
 	'use strict';
 	
 	class CharacterClass {
-		constructor (title) {
-			this.title = title;
+		constructor (data) {
+			this.id = data.id;
+			this.title = data.title;
+
+			this.attributes = {};
+			this.attributes.starting = new Attributes(data.attributes.starting);
+			this.attributes.levelDelta = new Attributes(data.attributes.levelDelta);
 		}
 
 		createStartingAttributes () {
-			return new Attributes();
+			return this.attributes.starting.copy();
 		}
 	};
 
-	class Wizard extends CharacterClass {
-		constructor () {
-			super('Wizard');
-
-			this.startingAttributes = new Attributes([1, 1, 1, 3, 2]);
-			this.attributesLevelDelta = new Attributes([0, 0, 1, 2, 0]);
-		}
-
-		createStartingAttributes () {
-			return new Attributes(this.startingAttributes.array.slice());
-		}
-	}
-
-	return {
-		classes: {
-			Wizard: Wizard
-		}
-	}
+	return CharacterClass;
 });

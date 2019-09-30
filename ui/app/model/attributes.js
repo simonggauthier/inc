@@ -16,6 +16,10 @@ define(() => {
 			}
 		}
 
+		copy () {
+			return new Attributes(this.array.slice());
+		}
+
 		get strength () {
 			return this.array[0];
 		}

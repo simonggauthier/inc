@@ -1,0 +1,10 @@
+{
+	"characterClasses": [{
+		"id": "wizard",
+		"title": "Wizard",
+		"attributes": {
+			"starting": [1, 1, 1, 3, 2],
+			"levelDelta": [0, 0, 1, 2, 0]
+		}
+	}]
+}

@@ -1,10 +1,8 @@
-define(['html', 'widgets/button'], (html, Button) => {
+define(['util/html', 'util/listener-list', 'widgets/button'], (html, ListenerList, Button) => {
 	'use strict';
 
 	class CharacterWindow {
-		constructor (character) {
-			this.character = character;
-
+		constructor () {
 			this.ui = {};
 			this.ui.$window = html.$find('#character .window');
 			this.ui.$stats = this.ui.$window.findChild('.stats');
@@ -14,19 +12,21 @@ define(['html', 'widgets/button'], (html, Button) => {
 
 			var t = this;
 
-			this.ui.levelUpButton.addClickListener({
+			this.ui.levelUpButton.clickListeners.add({
 				onClick: () => {
-					t.levelUp();
+					t.levelUpListeners.dispatch('onLevelUp', t);
 				}
 			});
+
+			this.levelUpListeners = new ListenerList();
 		}
 
-		update () {
-			this.updateStat('level', this.character.level);
-			this.updateStat('class', this.character.characterClass.title);
+		show (character) {
+			this.updateStat('level', character.level);
+			this.updateStat('class', character.characterClass.title);
 
-			for (var i = 0; i < this.character.attributes.array.length; i++) {
-				this.updateAttribute(i, this.character.attributes.array[i]);
+			for (var i = 0; i < character.attributes.array.length; i++) {
+				this.updateAttribute(i, character.attributes.array[i]);
 			}
 		}
 
@@ -36,12 +36,6 @@ define(['html', 'widgets/button'], (html, Button) => {
 
 		updateAttribute (index, value) {
 			this.ui.$attributes[index].findChild('.value').val(value);
-		}
-
-		levelUp () {
-			this.character.levelUp();
-
-			this.update();
 		}
 	}
 
