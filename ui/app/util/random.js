@@ -10,7 +10,7 @@ define(() => {
 			min = Math.floor(min);
 			max = Math.floor(max);
 
-			return Math.floor(Math.random() * max) + min;
+			return Math.floor(Math.random() * (max - min)) + min;
 		},
 
 		pick: (o) => {

@@ -16,21 +16,6 @@ define(['util/random', 'model/item-mod'], (Random, ItemMod) => {
 			this.weaponStats = null;
 		}
 
-		fromUnique(unique) {
-			this.name = unique.name;
-			this.level = unique.minLevel;
-			this.armorStats = unique.armorStats;
-			this.weaponStats = unique.weaponStats;
-
-			if (unique.mods) {
-				var t = this;
-
-				unique.mods.forEach((mod) => {
-					t.mods.push(new ItemMod(mod));
-				});
-			}
-		}
-
 		get subType() {
 			switch (this.type) {
 				case Item.Types.AMULET:
@@ -44,6 +29,28 @@ define(['util/random', 'model/item-mod'], (Random, ItemMod) => {
 				default:
 					return Item.SubTypes.ARMOR;
 			}
+		}
+
+		toString() {
+			var ret = '[' + this.name + ']\n';
+
+			ret += this.rarity + ' ' + this.type + ' (' + this.level + ')' + '\n';
+
+			if (this.subType === Item.SubTypes.WEAPON) {
+				ret += this.weaponStats.damage.min + ' to ' + this.weaponStats.damage.max + ' damage\n';
+			}
+
+			if (this.subType === Item.SubTypes.ARMOR || this.subType === Item.SubTypes.SHIELD) {
+				ret += this.armorStats.armor + ' armor\n';
+			}
+
+			ret += '---\n';
+
+			this.mods.forEach((mod) => {
+				ret += mod.effect.description + '\n';
+			});
+
+			return ret;
 		}
 	};
 

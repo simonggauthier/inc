@@ -43,7 +43,7 @@
 					},
 					"ranged": {
 						"intelligence": "Wand",
-						"strength": "Crossbow"
+						"strength": "Sling"
 					}
 				},
 				"one-handed-shield": {
@@ -164,6 +164,227 @@
 			}
 		},
 
+		"mods": {
+			"list": [{
+				"type": "prefix",
+				"name": "Robust",
+				"minLevel": 1,
+				"effect": {
+					"description": "+{0} to Strength",
+					"values": [{
+						"min": 1,
+						"max": 4
+					}],
+					"script": "attributeStack.push('strength', {0})"
+				}
+			}, {
+				"type": "prefix",
+				"name": "Sturdy",
+				"minLevel": 10,
+				"effect": {
+					"description": "+{0} to Strength",
+					"values": [{
+						"min": 4,
+						"max": 8
+					}],
+					"script": "attributeStack.push('strength', {0})"
+				}
+			}, {
+				"type": "prefix",
+				"name": "Powerful",
+				"minLevel": 20,
+				"effect": {
+					"description": "+{0} to Strength",
+					"values": [{
+						"min": 8,
+						"max": 12
+					}],
+					"script": "attributeStack.push('strength', {0})"
+				}
+			}, {
+				"type": "prefix",
+				"name": "Creative",
+				"minLevel": 1,
+				"effect": {
+					"description": "+{0} to Intelligence",
+					"values": [{
+						"min": 1,
+						"max": 4
+					}],
+					"script": "attributeStack.push('intelligence', {0})"
+				}
+			}, {
+				"type": "prefix",
+				"name": "Bright",
+				"minLevel": 10,
+				"effect": {
+					"description": "+{0} to Intelligence",
+					"values": [{
+						"min": 4,
+						"max": 8
+					}],
+					"script": "attributeStack.push('intelligence', {0})"
+				}
+			}, {
+				"type": "prefix",
+				"name": "Wise",
+				"minLevel": 20,
+				"effect": {
+					"description": "+{0} to Intelligence",
+					"values": [{
+						"min": 8,
+						"max": 12
+					}],
+					"script": "attributeStack.push('intelligence', {0})"
+				}
+			}, {
+				"type": "suffix",
+				"name": "of Anger",
+				"minLevel": 1,
+				"effect": {
+					"description": "+{0} to Strength",
+					"values": [{
+						"min": 1,
+						"max": 4
+					}],
+					"script": "attributeStack.push('strength', {0})"
+				}
+			}, {
+				"type": "suffix",
+				"name": "of Hate",
+				"minLevel": 10,
+				"effect": {
+					"description": "+{0} to Strength",
+					"values": [{
+						"min": 4,
+						"max": 8
+					}],
+					"script": "attributeStack.push('strength', {0})"
+				}
+			}, {
+				"type": "suffix",
+				"name": "of Rage",
+				"minLevel": 20,
+				"effect": {
+					"description": "+{0} to Strength",
+					"values": [{
+						"min": 8,
+						"max": 12
+					}],
+					"script": "attributeStack.push('strength', {0})"
+				}
+			}, {
+				"type": "suffix",
+				"name": "of The Mind",
+				"minLevel": 1,
+				"effect": {
+					"description": "+{0} to Intelligence",
+					"values": [{
+						"min": 1,
+						"max": 4
+					}],
+					"script": "attributeStack.push('intelligence', {0})"
+				}
+			}, {
+				"type": "suffix",
+				"name": "of The Scholar",
+				"minLevel": 10,
+				"effect": {
+					"description": "+{0} to Intelligence",
+					"values": [{
+						"min": 4,
+						"max": 8
+					}],
+					"script": "attributeStack.push('intelligence', {0})"
+				}
+			}, {
+				"type": "suffix",
+				"name": "of The Sage",
+				"minLevel": 20,
+				"effect": {
+					"description": "+{0} to Intelligence",
+					"values": [{
+						"min": 8,
+						"max": 12
+					}],
+					"script": "attributeStack.push('intelligence', {0})"
+				}
+			}, {
+				"type": "prefix",
+				"name": "Generous",
+				"minLevel": 1,
+				"effect": {
+					"description": "+{0} to all attributes",
+					"values": [10],
+					"script": "attributeStack.pushAll({0})"
+				}
+			}, {
+				"type": "prefix",
+				"name": "Impressive",
+				"minLevel": 1,
+				"effect": {
+					"description": "Increase title rank",
+					"values": [1],
+					"script": "specialAttributeStack.push('titleRank', {0})"
+				}
+			}],
+
+			"baseTypes": {
+				"helmet": {
+					"intelligence": ["Creative", "Bright", "Wise", "of The Mind", "of The Scholar", "of The Sage"],
+					"strength": ["Robust", "Sturdy", "Powerful", "of Anger", "of Hate", "of Rage"]
+				},
+				"amulet": {
+					"intelligence": ["Creative", "Bright", "Wise", "of The Mind", "of The Scholar", "of The Sage"],
+					"strength": ["Robust", "Sturdy", "Powerful", "of Anger", "of Hate", "of Rage"]
+				},
+				"one-handed-weapon": {
+					"melee": {
+						"intelligence": ["Creative", "Bright", "Wise", "of The Mind", "of The Scholar", "of The Sage"],
+						"strength": ["Robust", "Sturdy", "Powerful", "of Anger", "of Hate", "of Rage"]
+					},
+					"ranged": {
+						"intelligence": ["Creative", "Bright", "Wise", "of The Mind", "of The Scholar", "of The Sage"],
+						"strength": ["Robust", "Sturdy", "Powerful", "of Anger", "of Hate", "of Rage"]
+					}
+				},
+				"one-handed-shield": {
+					"intelligence": ["Creative", "Bright", "Wise", "of The Mind", "of The Scholar", "of The Sage"],
+					"strength": ["Robust", "Sturdy", "Powerful", "of Anger", "of Hate", "of Rage"]
+				},
+				"two-handed-weapon": {
+					"melee": {
+						"intelligence": ["Creative", "Bright", "Wise", "of The Mind", "of The Scholar", "of The Sage"],
+						"strength": ["Robust", "Sturdy", "Powerful", "of Anger", "of Hate", "of Rage"]
+					},
+					"ranged": {
+						"intelligence": ["Creative", "Bright", "Wise", "of The Mind", "of The Scholar", "of The Sage"],
+						"strength": ["Robust", "Sturdy", "Powerful", "of Anger", "of Hate", "of Rage"]
+					}
+				},
+				"belt": {
+					"intelligence": ["Creative", "Bright", "Wise", "of The Mind", "of The Scholar", "of The Sage"],
+					"strength": ["Robust", "Sturdy", "Powerful", "of Anger", "of Hate", "of Rage"]
+				},
+				"chest": {
+					"intelligence": ["Creative", "Bright", "Wise", "of The Mind", "of The Scholar", "of The Sage"],
+					"strength": ["Robust", "Sturdy", "Powerful", "of Anger", "of Hate", "of Rage"]
+				},
+				"ring": {
+					"intelligence": ["Creative", "Bright", "Wise", "of The Mind", "of The Scholar", "of The Sage"],
+					"strength": ["Robust", "Sturdy", "Powerful", "of Anger", "of Hate", "of Rage"]
+				},
+				"gloves": {
+					"intelligence": ["Creative", "Bright", "Wise", "of The Mind", "of The Scholar", "of The Sage"],
+					"strength": ["Robust", "Sturdy", "Powerful", "of Anger", "of Hate", "of Rage"]
+				},
+				"boots": {
+					"intelligence": ["Creative", "Bright", "Wise", "of The Mind", "of The Scholar", "of The Sage"],
+					"strength": ["Robust", "Sturdy", "Powerful", "of Anger", "of Hate", "of Rage"]
+				}
+			}
+		},
+
 		"uniques": {
 			"baseTypes": {
 				"helmet": {
@@ -173,398 +394,7 @@
 						"armorStats": {
 							"armor": 100
 						},
-						"mods": [{
-							"name": "Generous",
-							"effect": {
-								"description": "+{0} to all attributes",
-								"values": [10],
-								"script": "attributeStack.pushAll({0})"
-							}
-						}, {
-							"name": "Learning",
-							"effect": {
-								"description": "+{0} to Intelligence",
-								"values": [10],
-								"script": "attributeStack.push('intelligence', {0})"
-							}
-						}, {
-							"name": "Impressive",
-							"effect": {
-								"description": "Increase title rank",
-								"values": [1],
-								"script": "specialAttributeStack.push('titleRank', {0})"
-							}
-						}]
-					}]
-				}
-			}
-		},
-
-		"mods": {
-			"baseTypes": {
-				"helmet": {
-					"intelligence": [{
-						"type": "prefix",
-						"name": "Quick",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Dexterity",
-							"values": [1],
-							"script": "attributeStack.push('dexterity', {0})"
-						}
-					}, {
-						"type": "prefix",
-						"name": "Modern",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Charisma",
-							"values": [{
-								"min": 1,
-								"max": 4
-							}],
-							"script": "attributeStack.push('charisma', {0})"
-						}
-					}, {
-						"type": "suffix",
-						"name": "Learning",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Intelligence",
-							"values": [{
-								"min": 1,
-								"max": 3
-							}],
-							"script": "attributeStack.push('intelligence', {0})"
-						}
-					}, {
-						"type": "suffix",
-						"name": "Inspiration",
-						"minLevel": 10,
-						"effect": {
-							"description": "+{0} to Intelligence",
-							"values": [{
-								"min": 3,
-								"max": 5
-							}],
-							"script": "attributeStack.push('intelligence', {0})"
-						}
-					}],
-					"strength": [{
-						"type": "prefix",
-						"name": "Sturdy",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Armor",
-							"values": [{
-								"min": 5,
-								"max": 15
-							}],
-							"script": "itemStack.push('armor', {0})"
-						}
-					}, {
-						"type": "prefix",
-						"name": "Shiny",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Charisma",
-							"values": [{
-								"min": 2,
-								"max": 5
-							}],
-							"script": "itemStack.push('charisma', {0})"
-						}
-					}, {
-						"type": "suffix",
-						"name": "the Resilient",
-						"minLevel": 10,
-						"effect": {
-							"description": "+{0} to strength",
-							"values": [{
-								"min": 4,
-								"max": 6
-							}],
-							"script": "itemStack.push('strength', {0})"
-						}
-					}]
-				},
-				"amulet": {
-					"intelligence": [{
-						"type": "prefix",
-						"name": "Quick",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Dexterity",
-							"values": [1],
-							"script": "attributeStack.push('dexterity', {0})"
-						}
-					}],
-					"strength": [{
-						"type": "prefix",
-						"name": "Sturdy",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Armor",
-							"values": [{
-								"min": 5,
-								"max": 15
-							}],
-							"script": "itemStack.push('armor', {0})"
-						}
-					}]
-				},
-				"one-handed-weapon": {
-					"melee": {
-						"intelligence": [{
-							"type": "prefix",
-							"name": "Quick",
-							"minLevel": 1,
-							"effect": {
-								"description": "+{0} to Dexterity",
-								"values": [1],
-								"script": "attributeStack.push('dexterity', {0})"
-							}
-						}],
-						"strength": [{
-							"type": "prefix",
-							"name": "Sturdy",
-							"minLevel": 1,
-							"effect": {
-								"description": "+{0} to Armor",
-								"values": [{
-									"min": 5,
-									"max": 15
-								}],
-								"script": "itemStack.push('armor', {0})"
-							}
-						}]
-					},
-					"ranged": {
-
-						"intelligence": [{
-							"type": "prefix",
-							"name": "Quick",
-							"minLevel": 1,
-							"effect": {
-								"description": "+{0} to Dexterity",
-								"values": [1],
-								"script": "attributeStack.push('dexterity', {0})"
-							}
-						}],
-						"strength": [{
-							"type": "prefix",
-							"name": "Sturdy",
-							"minLevel": 1,
-							"effect": {
-								"description": "+{0} to Armor",
-								"values": [{
-									"min": 5,
-									"max": 15
-								}],
-								"script": "itemStack.push('armor', {0})"
-							}
-						}]
-					}
-				},
-				"one-handed-shield": {
-					"intelligence": [{
-						"type": "prefix",
-						"name": "Quick",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Dexterity",
-							"values": [1],
-							"script": "attributeStack.push('dexterity', {0})"
-						}
-					}],
-					"strength": [{
-						"type": "prefix",
-						"name": "Sturdy",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Armor",
-							"values": [{
-								"min": 5,
-								"max": 15
-							}],
-							"script": "itemStack.push('armor', {0})"
-						}
-					}]
-				},
-				"two-handed-weapon": {
-					"melee": {
-						"intelligence": [{
-							"type": "prefix",
-							"name": "Quick",
-							"minLevel": 1,
-							"effect": {
-								"description": "+{0} to Dexterity",
-								"values": [1],
-								"script": "attributeStack.push('dexterity', {0})"
-							}
-						}],
-						"strength": [{
-							"type": "prefix",
-							"name": "Sturdy",
-							"minLevel": 1,
-							"effect": {
-								"description": "+{0} to Armor",
-								"values": [{
-									"min": 5,
-									"max": 15
-								}],
-								"script": "itemStack.push('armor', {0})"
-							}
-						}]
-					},
-					"ranged": {
-						"intelligence": [{
-							"type": "prefix",
-							"name": "Quick",
-							"minLevel": 1,
-							"effect": {
-								"description": "+{0} to Dexterity",
-								"values": [1],
-								"script": "attributeStack.push('dexterity', {0})"
-							}
-						}],
-						"strength": [{
-							"type": "prefix",
-							"name": "Sturdy",
-							"minLevel": 1,
-							"effect": {
-								"description": "+{0} to Armor",
-								"values": [{
-									"min": 5,
-									"max": 15
-								}],
-								"script": "itemStack.push('armor', {0})"
-							}
-						}]
-					}
-				},
-				"belt": {
-					"intelligence": [{
-						"type": "prefix",
-						"name": "Quick",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Dexterity",
-							"values": [1],
-							"script": "attributeStack.push('dexterity', {0})"
-						}
-					}],
-					"strength": [{
-						"type": "prefix",
-						"name": "Sturdy",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Armor",
-							"values": [{
-								"min": 5,
-								"max": 15
-							}],
-							"script": "itemStack.push('armor', {0})"
-						}
-					}]
-				},
-				"chest": {
-					"intelligence": [{
-						"type": "prefix",
-						"name": "Quick",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Dexterity",
-							"values": [1],
-							"script": "attributeStack.push('dexterity', {0})"
-						}
-					}],
-					"strength": [{
-						"type": "prefix",
-						"name": "Sturdy",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Armor",
-							"values": [{
-								"min": 5,
-								"max": 15
-							}],
-							"script": "itemStack.push('armor', {0})"
-						}
-					}]
-				},
-				"ring": {
-					"intelligence": [{
-						"type": "prefix",
-						"name": "Quick",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Dexterity",
-							"values": [1],
-							"script": "attributeStack.push('dexterity', {0})"
-						}
-					}],
-					"strength": [{
-						"type": "prefix",
-						"name": "Sturdy",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Armor",
-							"values": [{
-								"min": 5,
-								"max": 15
-							}],
-							"script": "itemStack.push('armor', {0})"
-						}
-					}]
-				},
-				"gloves": {
-					"intelligence": [{
-						"type": "prefix",
-						"name": "Quick",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Dexterity",
-							"values": [1],
-							"script": "attributeStack.push('dexterity', {0})"
-						}
-					}],
-					"strength": [{
-						"type": "prefix",
-						"name": "Sturdy",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Armor",
-							"values": [{
-								"min": 5,
-								"max": 15
-							}],
-							"script": "itemStack.push('armor', {0})"
-						}
-					}]
-				},
-				"boots": {
-					"intelligence": [{
-						"type": "prefix",
-						"name": "Quick",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Dexterity",
-							"values": [1],
-							"script": "attributeStack.push('dexterity', {0})"
-						}
-					}],
-					"strength": [{
-						"type": "prefix",
-						"name": "Sturdy",
-						"minLevel": 1,
-						"effect": {
-							"description": "+{0} to Armor",
-							"values": [{
-								"min": 5,
-								"max": 15
-							}],
-							"script": "itemStack.push('armor', {0})"
-						}
+						"modNames": ["Generous", "of The Sage", "Impressive"]
 					}]
 				}
 			}

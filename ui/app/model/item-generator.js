@@ -1,24 +1,17 @@
 define(['util/random', 'model/game-data', 'model/item', 'model/item-mod'], (Random, GameData, Item, ItemMod) => {
 	'use strict';
 
-	// Item generation steps
-	// - Type
-	// - Class
-	// - Rarity
-	// | if weapon
-	//	- Range
-	//	- Damage
-	// | if armor
-	//	- Armor
-
+	/**
+	 * Find a slice corresponding to number cur
+	 * Ex: cur is between slice.min and slice.max
+	 */
 	var findSlice = (slices, cur) => {
 		return slices.filter(slice => cur >= slice.min && cur <= slice.max)[0];
 	};
 
-	var generateType = () => {
-		return Random.pick(Item.Types);
-	};
-
+	/**
+	 * Find a unique item for current item specs. If no unique is found, return null
+	 */
 	var findUnique = (item) => {
 		var uniques = GameData.itemGeneration.uniques.baseTypes[item.type];
 
@@ -36,6 +29,41 @@ define(['util/random', 'model/game-data', 'model/item', 'model/item-mod'], (Rand
 
 		return null;
 	}
+
+	/**
+	 * Create a unique item
+	 */
+	var transformToUnique = function(item, unique) {
+		item.name = unique.name;
+		item.level = unique.minLevel;
+		item.armorStats = unique.armorStats;
+		item.weaponStats = unique.weaponStats;
+
+		if (unique.modNames) {
+			unique.modNames.forEach((modName) => {
+				item.mods.push(new ItemMod(findMod(modName)));
+			});
+		}
+
+		return item;
+	};
+
+	/**
+	 * Find a mod by name
+	 */
+	var findMod = (modName) => {
+		for (var i = 0; i < GameData.itemGeneration.mods.list.length; i++) {
+			if (GameData.itemGeneration.mods.list[i].name === modName) {
+				return GameData.itemGeneration.mods.list[i];
+			}
+		}
+
+		return null;
+	};
+
+	var generateType = () => {
+		return Random.pick(Item.Types);
+	};
 
 	var generateItemClass = () => {
 		return Random.pick(Item.Classes);
@@ -89,41 +117,37 @@ define(['util/random', 'model/game-data', 'model/item', 'model/item-mod'], (Rand
 		return ret;
 	};
 
+	/**
+	 * This methods tries to roll {count} mods for an item, if possible.
+	 */
 	var rollMods = (item, count) => {
-		var mods = GameData.itemGeneration.mods.baseTypes[item.type];
+		var modNames = GameData.itemGeneration.mods.baseTypes[item.type];
 
 		if (item.subType === Item.SubTypes.WEAPON) {
-			mods = mods[item.weaponStats.range];
+			modNames = modNames[item.weaponStats.range];
 		}
 
-		mods = mods[item.itemClass];
+		modNames = modNames[item.itemClass];
+
+		if (modNames.length === 0) {
+			return [];
+		}
+
+		var rolledModNames = [];
+
+		for (var i = 0; i < count; i++) {
+			var modName = Random.pick(modNames);
+
+			if (rolledModNames.indexOf(modName) < 0) {
+				rolledModNames.push(modName);
+			}
+		}
 
 		var ret = [];
 
-		if (!mods) {
-			log('Cannot roll mods for');
-			log(item);
-
-			throw 'Cannot roll mods';
-		}
-
-		for (var i = 0; i < count; i++) {
-			var mod = Random.pick(mods);
-			var loopGuard = 10;
-
-			var dupCheck = false;
-
-			for (var j = 0; j < ret.length; j++) {
-				if (ret[j].name === mod.name) {
-					dupCheck = true;
-					break;
-				}
-			}
-
-			if (!dupCheck && mod.minLevel <= item.level) {
-				ret.push(new ItemMod(mod));
-			}
-		}
+		rolledModNames.forEach((rolledModName) => {
+			ret.push(new ItemMod(findMod(rolledModName)));
+		});
 
 		return ret;
 	};
@@ -171,7 +195,7 @@ define(['util/random', 'model/game-data', 'model/item', 'model/item-mod'], (Rand
 				base = mod.name + ' ' + base;
 				gotPrefix = true;
 			} else if (mod.type === ItemMod.Types.SUFFIX && !gotSuffix) {
-				base = base + ' of ' + mod.name;
+				base = base + ' ' + mod.name;
 				gotSuffix = true;
 			}
 		});
@@ -179,6 +203,19 @@ define(['util/random', 'model/game-data', 'model/item', 'model/item-mod'], (Rand
 		return base;
 	};
 
+	/*
+	Item generation steps:
+		- Type
+		- Class
+		- Rarity
+		- if subType is weapon
+			- Range
+			- Damage
+		- if subType is armor
+			- Armor
+		- Mods
+		- Name
+	*/
 	var ItemGenerator = {
 		createRandomItem: (spec) => {
 			var ret = new Item();
@@ -196,7 +233,7 @@ define(['util/random', 'model/game-data', 'model/item', 'model/item-mod'], (Rand
 				var unique = findUnique(ret);
 
 				if (unique) {
-					ret.fromUnique(unique);
+					ret = transformToUnique(ret, unique);
 
 					return ret;
 				} else {

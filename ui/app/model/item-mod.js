@@ -24,7 +24,9 @@ define(['util/random'], (Random) => {
 				if (typeof this.effect.values[i] === 'number' || typeof this.effect.values[i] === 'string') {
 					realValues.push(this.effect.values[i]);
 				} else {
-					realValues.push(Random.between(this.effect.values[i].min, this.effect.values[i].max));
+					var value = Random.between(this.effect.values[i].min, this.effect.values[i].max);
+
+					realValues.push(value);
 				}
 
 				this.name = this.name.replace('{' + i + '}', realValues[i]);

@@ -18,15 +18,7 @@ define(['model/character', 'model/game-data', 'model/item', 'model/item-generato
 			for (var i = 0; i < 100; i++) {
 				var item = ItemGenerator.createRandomItem();
 
-				if (item.rarity === 'legendary') {
-					if (item.mods.length == 2) {
-						log(item);
-					}
-				}
-
-				if (item.rarity === 'unique') {
-					log(item);
-				}
+				log(item.toString() + '\n');
 			}
 		}
 	};
