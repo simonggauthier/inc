@@ -1,10 +1,8 @@
-define(['util/http', 'model/game-data', 'widgets/character-window'], (http, GameData, CharacterWindow) => {
+define(['model/game-data', 'widgets/character-window'], (GameData, CharacterWindow) => {
 	'use strict';
-	
-	class Game {
-		constructor () {
-			this.gameData = null;
 
+	class Game {
+		constructor() {
 			this.state = {
 				character: null
 			};
@@ -12,11 +10,11 @@ define(['util/http', 'model/game-data', 'widgets/character-window'], (http, Game
 			this.widgets = {};
 		}
 
-		start () {
+		start() {
 			var t = this;
 
 			return new Promise((resolve, reject) => {
-				t.loadGameData().then(() => {
+				GameData.load().then(() => {
 					t.createWidgets();
 
 					resolve();
@@ -24,27 +22,7 @@ define(['util/http', 'model/game-data', 'widgets/character-window'], (http, Game
 			});
 		}
 
-		loadGameData () {
-			var t = this;
-
-			log('Loading game data');
-
-			var ret = new Promise((resolve, reject) => {
-				http.get('/data').then((r) => {
-					var data = JSON.parse(r.content);
-
-					t.gameData = new GameData(data);
-
-					log('Game data loaded');
-
-					resolve();
-				});
-			});
-
-			return ret;
-		}
-
-		createWidgets () {
+		createWidgets() {
 			log('Creating widgets');
 
 			var t = this;
@@ -59,7 +37,7 @@ define(['util/http', 'model/game-data', 'widgets/character-window'], (http, Game
 			});
 		}
 
-		update () {
+		update() {
 			log('Updating game');
 
 			this.widgets.characterWindow.show(this.state.character);
