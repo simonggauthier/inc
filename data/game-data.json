@@ -9,11 +9,19 @@
 	}],
 
 	"itemGeneration": {
+		"minItemLevel": 1,
+		"maxItemLevel": 50,
+
 		"rarityWeights": {
 			"unique": 0.05,
 			"legendary": 0.1,
 			"enchanted": 0.5,
 			"normal": 1
+		},
+
+		"rarityModCount": {
+			"legendary": 2,
+			"enchanted": 1
 		},
 
 		"weapon": {
@@ -25,8 +33,7 @@
 
 		"armor": {
 			"minMult": 1,
-			"maxMult": 3,
-			"intelligenceMult": 0.3
+			"maxMult": 3
 		},
 
 		"names": {

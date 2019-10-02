@@ -8,15 +8,15 @@ define(['model/character', 'model/game-data', 'model/item', 'model/item-generato
 
 		start() {
 			// Create a character
-			this.game.state.character = new Character();
+			this.game.state.character = new Character.Character();
 			this.game.state.character.assignCharacterClass(GameData.characterClasses[0]);
 
 			this.game.update();
 
-			window.ItemGenerator = ItemGenerator;
+			var itemGenerator = new ItemGenerator();
 
 			for (var i = 0; i < 100; i++) {
-				var item = ItemGenerator.createRandomItem();
+				var item = itemGenerator.randomItem();
 
 				log(item.toString() + '\n');
 			}

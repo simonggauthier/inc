@@ -31,6 +31,19 @@ define(['util/random', 'model/game-data', 'model/item', 'model/item-mod'], (Rand
 	}
 
 	/**
+	 * Find a mod by name
+	 */
+	var findMod = (modName) => {
+		for (var i = 0; i < GameData.itemGeneration.mods.list.length; i++) {
+			if (GameData.itemGeneration.mods.list[i].name === modName) {
+				return GameData.itemGeneration.mods.list[i];
+			}
+		}
+
+		return null;
+	};
+
+	/**
 	 * Create a unique item
 	 */
 	var transformToUnique = function(item, unique) {
@@ -44,163 +57,6 @@ define(['util/random', 'model/game-data', 'model/item', 'model/item-mod'], (Rand
 				item.mods.push(new ItemMod(findMod(modName)));
 			});
 		}
-
-		return item;
-	};
-
-	/**
-	 * Find a mod by name
-	 */
-	var findMod = (modName) => {
-		for (var i = 0; i < GameData.itemGeneration.mods.list.length; i++) {
-			if (GameData.itemGeneration.mods.list[i].name === modName) {
-				return GameData.itemGeneration.mods.list[i];
-			}
-		}
-
-		return null;
-	};
-
-	var generateType = () => {
-		return Random.pick(Item.Types);
-	};
-
-	var generateItemClass = () => {
-		return Random.pick(Item.Classes);
-	};
-
-	var generateRarity = (item) => {
-		var ret = Random.weightedPick(GameData.itemGeneration.rarityWeights);
-
-		return ret;
-	};
-
-	var generateWeaponStats = (item) => {
-		var handedMult = item.type === Item.Types.TWO_HANDED_WEAPON ? GameData.itemGeneration.weapon.twoHandedMult : 1;
-		var minMult = handedMult * GameData.itemGeneration.weapon.minMult;
-		var maxMult = handedMult * GameData.itemGeneration.weapon.maxMult;
-
-		var range = Random.pick(Item.Ranges);
-
-		if (range === Item.Ranges.RANGED) {
-			minMult *= GameData.itemGeneration.weapon.rangedMult;
-			maxMult *= GameData.itemGeneration.weapon.rangedMult;
-		}
-
-		var min = Random.between(item.level * minMult, item.level * maxMult);
-
-		var ret = {
-			damage: {
-				min: min,
-				max: min + Random.between(item.level * minMult, item.level * maxMult)
-			},
-
-			range: range
-		};
-
-		return ret;
-	};
-
-	var generateArmorStats = (item) => {
-		var minMult = GameData.itemGeneration.armor.minMult;
-		var maxMult = GameData.itemGeneration.armor.maxMult;
-
-		if (item.itemClass === Item.Classes.Intelligence) {
-			minMult *= GameData.itemGeneration.armor.intelligenceMult;
-			maxMult *= GameData.itemGeneration.armor.intelligenceMult;
-		}
-
-		var ret = {
-			armor: Random.between(item.level * minMult, item.level * maxMult)
-		};
-
-		return ret;
-	};
-
-	/**
-	 * This methods tries to roll {count} mods for an item, if possible.
-	 */
-	var rollMods = (item, count) => {
-		var modNames = GameData.itemGeneration.mods.baseTypes[item.type];
-
-		if (item.subType === Item.SubTypes.WEAPON) {
-			modNames = modNames[item.weaponStats.range];
-		}
-
-		modNames = modNames[item.itemClass];
-
-		if (modNames.length === 0) {
-			return [];
-		}
-
-		var rolledModNames = [];
-
-		for (var i = 0; i < count; i++) {
-			var modName = Random.pick(modNames);
-
-			if (rolledModNames.indexOf(modName) < 0) {
-				rolledModNames.push(modName);
-			}
-		}
-
-		var ret = [];
-
-		rolledModNames.forEach((rolledModName) => {
-			ret.push(new ItemMod(findMod(rolledModName)));
-		});
-
-		return ret;
-	};
-
-	var generateMods = (item) => {
-		if (item.rarity === Item.Rarities.NORMAL) {
-			return [];
-		}
-
-		switch (item.rarity) {
-			case Item.Rarities.NORMAL:
-				return [];
-			case Item.Rarities.ENCHANTED:
-				return rollMods(item, 1);
-			case Item.Rarities.LEGENDARY:
-				return rollMods(item, 2);
-			case Item.Rarities.UNIQUE:
-				return [];
-		}
-	};
-
-	var generateName = (item) => {
-		// Base
-		var base = GameData.itemGeneration.names.baseTypes[item.type];
-
-		if (typeof base !== 'string') {
-			if (typeof base[Object.keys(base)[0]] !== 'string') {
-				base = base[item.weaponStats.range][item.itemClass];
-			} else {
-				base = base[item.itemClass];
-			}
-		}
-
-		// Material
-		var materialSlices = GameData.itemGeneration.names.materials[item.subType][item.itemClass];
-
-		base = findSlice(materialSlices, item.level).name + ' ' + base;
-
-		// Prefix / Suffix
-		var gotPrefix = false;
-		var gotSuffix = false;
-
-		item.mods.forEach((mod) => {
-			if (mod.type === ItemMod.Types.PREFIX && !gotPrefix) {
-				base = mod.name + ' ' + base;
-				gotPrefix = true;
-			} else if (mod.type === ItemMod.Types.SUFFIX && !gotSuffix) {
-				base = base + ' ' + mod.name;
-				gotSuffix = true;
-			}
-		});
-
-		return base;
 	};
 
 	/*
@@ -216,49 +72,232 @@ define(['util/random', 'model/game-data', 'model/item', 'model/item-mod'], (Rand
 		- Mods
 		- Name
 	*/
-	var ItemGenerator = {
-		createRandomItem: (spec) => {
-			var ret = new Item();
+	class ItemGenerator {
+		constructor(spec) {
+			this.spec = spec || {};
+		}
 
-			if (!spec) {
-				spec = {};
-			}
+		randomItem() {
+			return this
+				.createItem()
+				.rollLevel()
+				.rollType()
+				.rollItemClass()
+				.rollRarity()
+				.rollSubTypeStats()
+				.rollMods()
+				.rollName().item;
+		}
 
-			ret.level = spec.level || Random.between(1, 100);
-			ret.type = spec.type || generateType();
-			ret.itemClass = spec.itemClass || generateItemClass();
-			ret.rarity = spec.rarity || generateRarity(ret);
+		createItem() {
+			this.item = new Item();
 
-			if (ret.rarity === Item.Rarities.UNIQUE) {
-				var unique = findUnique(ret);
+			return this;
+		}
+
+		rollLevel() {
+			this.item.level = this.spec.level || Random.between(GameData.itemGeneration.minItemLevel, GameData.itemGeneration.maxItemLevel);
+
+			return this;
+		}
+
+		rollType() {
+			this.item.type = this.spec.type || Random.pick(Item.Types);
+
+			return this;
+		}
+
+		rollItemClass() {
+			this.item.itemClass = this.spec.itemClass || Random.pick(Item.Classes);
+
+			return this;
+		}
+
+		rollRarity() {
+			this.item.rarity = this.spec.rarity || Random.weightedPick(GameData.itemGeneration.rarityWeights);
+
+			if (this.item.rarity === Item.Rarities.UNIQUE) {
+				var unique = findUnique(this.item);
 
 				if (unique) {
-					ret = transformToUnique(ret, unique);
-
-					return ret;
+					transformToUnique(this.item, unique);
 				} else {
-					ret.rarity = Item.Rarities.NORMAL;
+					this.item.rarity = Item.Rarities.NORMAL;
 				}
 			}
 
-			if (ret.subType === Item.SubTypes.WEAPON) {
-				ret.weaponStats = spec.weaponStats || generateWeaponStats(ret);
-			} else if (ret.subType === Item.SubTypes.ARMOR || ret.subType === Item.SubTypes.SHIELD) {
-				ret.armorStats = spec.armorStats || generateArmorStats(ret);
+			return this;
+		}
+
+		rollSubTypeStats() {
+			if (this.item.subType === Item.SubTypes.WEAPON) {
+				return this.rollWeaponStats();
 			}
 
-			ret.mods = spec.mods || generateMods(ret);
-
-			try {
-				ret.name = spec.name || generateName(ret);
-			} catch (e) {
-				log('Could not generate name for');
-				log(ret);
-
-				throw e;
+			if (this.item.subType === Item.SubTypes.ARMOR || this.item.subType === Item.SubTypes.SHIELD) {
+				return this.rollArmorStats();
 			}
 
-			return ret;
+			return this;
+		}
+
+		rollWeaponStats() {
+			if (this.spec.weaponStats) {
+				this.item.weaponStats = spec.weaponStats;
+
+				return this;
+			}
+
+			if (!this.item.type) {
+				throw 'Cannot generate weapon stats on an item with no type';
+			}
+
+			if (!this.item.level) {
+				throw 'Cannot generate weapon stats on an item with no level';
+			}
+
+			var handedMult = this.item.type === Item.Types.TWO_HANDED_WEAPON ? GameData.itemGeneration.weapon.twoHandedMult : 1;
+			var minMult = handedMult * GameData.itemGeneration.weapon.minMult;
+			var maxMult = handedMult * GameData.itemGeneration.weapon.maxMult;
+
+			var range = Random.pick(Item.Ranges);
+
+			if (range === Item.Ranges.RANGED) {
+				minMult *= GameData.itemGeneration.weapon.rangedMult;
+				maxMult *= GameData.itemGeneration.weapon.rangedMult;
+			}
+
+			var min = Random.between(this.item.level * minMult, this.item.level * maxMult);
+
+			this.item.weaponStats = {
+				damage: {
+					min: min,
+					max: min + Random.between(this.item.level * minMult, this.item.level * maxMult)
+				},
+
+				range: range
+			};
+
+			return this;
+		}
+
+		rollArmorStats() {
+			if (this.spec.armorStats) {
+				this.item.armorStats = spec.armorStats;
+
+				return this;
+			}
+
+			if (!this.item.level) {
+				throw 'Cannot generate armor stats on an item with no level';
+			}
+
+			var minMult = GameData.itemGeneration.armor.minMult;
+			var maxMult = GameData.itemGeneration.armor.maxMult;
+
+			this.item.armorStats = {
+				armor: Random.between(this.item.level * minMult, this.item.level * maxMult)
+			};
+
+			return this;
+		}
+
+		rollMods() {
+			if (!this.item.rarity) {
+				throw 'Cannot generate mods on an item with no rarity';
+			}
+
+			if (!this.item.type) {
+				throw 'Cannot generate mods on an item with no type';
+			}
+
+			if (!this.item.itemClass) {
+				throw 'Cannot generate mods on an item with no itemClass';
+			}
+
+			var count = GameData.itemGeneration.rarityModCount[this.item.rarity];
+
+			if (!count) {
+				return this;
+			}
+
+			var modNames = GameData.itemGeneration.mods.baseTypes[this.item.type];
+
+			if (this.item.subType === Item.SubTypes.WEAPON) {
+				modNames = modNames[this.item.weaponStats.range];
+			}
+
+			modNames = modNames[this.item.itemClass];
+
+			if (modNames.length === 0) {
+				return this;
+			}
+
+			var rolledModNames = [];
+
+			for (var i = 0; i < count; i++) {
+				var modName = Random.pick(modNames);
+
+				if (rolledModNames.indexOf(modName) < 0) {
+					rolledModNames.push(modName);
+				}
+			}
+
+			var t = this;
+			var ret = [];
+
+			rolledModNames.forEach((rolledModName) => {
+				t.item.mods.push(new ItemMod(findMod(rolledModName)));
+			});
+
+			return this;
+		}
+
+		rollName() {
+			if (!this.item.type) {
+				throw 'Cannot generate name on an item with no type';
+			}
+
+			if (!this.item.itemClass) {
+				throw 'Cannot generate name on an item with no itemClass';
+			}
+
+			if (!this.item.level) {
+				throw 'Cannot generate mods on an item with no level';
+			}
+
+			var base = GameData.itemGeneration.names.baseTypes[this.item.type];
+
+			if (typeof base !== 'string') {
+				if (typeof base[Object.keys(base)[0]] !== 'string') {
+					base = base[this.item.weaponStats.range][this.item.itemClass];
+				} else {
+					base = base[this.item.itemClass];
+				}
+			}
+
+			// Material
+			var materialSlices = GameData.itemGeneration.names.materials[this.item.subType][this.item.itemClass];
+
+			base = findSlice(materialSlices, this.item.level).name + ' ' + base;
+
+			// Prefix / Suffix
+			var gotPrefix = false;
+			var gotSuffix = false;
+
+			this.item.mods.forEach((mod) => {
+				if (mod.type === ItemMod.Types.PREFIX && !gotPrefix) {
+					base = mod.name + ' ' + base;
+					gotPrefix = true;
+				} else if (mod.type === ItemMod.Types.SUFFIX && !gotSuffix) {
+					base = base + ' ' + mod.name;
+					gotSuffix = true;
+				}
+			});
+
+			this.item.name = base;
+
+			return this;
 		}
 	};
 
