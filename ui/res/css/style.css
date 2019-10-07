@@ -53,7 +53,7 @@ body {
   float: left; }
 
 #equipment .window {
-  width: 400px;
+  width: 300px;
   float: left; }
 #equipment .slots .slot {
   border: 1px solid #ccc;
@@ -63,15 +63,15 @@ body {
   margin-bottom: 3px; }
   #equipment .slots .row .group {
     margin: 0 auto 0 auto; }
-  #equipment .slots .row .g1 {
-    width: calc(40px * 2); }
+  #equipment .slots .row .g2 {
+    width: calc(40px * 2 + 2px * 2); }
+  #equipment .slots .row .g3 {
+    width: calc(40px * 3 + 2px * 3); }
   #equipment .slots .row .group:after {
     content: "";
     display: table;
     clear: both; }
 #equipment .slots .helmet {
   margin: 0 auto 0 auto; }
-#equipment .slots .chest {
-  float: left; }
-#equipment .slots .amulet {
+#equipment .slots .chest, #equipment .slots .amulet, #equipment .slots .left-ring, #equipment .slots .belt, #equipment .slots .right-ring, #equipment .slots .gloves, #equipment .slots .boots {
   float: left; }

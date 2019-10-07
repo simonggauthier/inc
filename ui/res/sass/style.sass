@@ -75,7 +75,7 @@ body
 
 #equipment
 	.window
-		width: 400px
+		width: 300px
 		float: left
 	.slots
 		.slot
@@ -87,15 +87,21 @@ body
 
 			.group
 				margin: 0 auto 0 auto
-			.g1
-				width: calc(#{$equipment-slot-width} * 2)
+
+			@mixin slot-group($c)
+				width: calc(#{$equipment-slot-width} * #{$c} + 2px * #{$c})
+
+			.g2
+				@include slot-group(2)
+			.g3
+				@include slot-group(3)
 			.group:after
 				content: ''
 				display: table
 				clear: both
 		.helmet
 			margin: 0 auto 0 auto
-		.chest
+		.chest, .amulet, .left-ring, .belt, .right-ring, .gloves, .boots
 			float: left
-		.amulet
-			float: left
+
+
