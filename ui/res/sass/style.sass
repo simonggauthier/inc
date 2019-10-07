@@ -1,0 +1,101 @@
+html
+	@import "clear"
+
+$bg-color: #111
+$text-color: #ccc
+
+$font-family: 'MedievalSharp', cursive
+$font-size-base: 22px
+
+$border-size: 1px
+$border-color: #ccc
+
+$equipment-slot-width: 40px
+$equipment-slot-height: 50px
+
+@mixin border 
+	border: $border-size solid $border-color
+
+body
+	background-color: $bg-color
+	color: $text-color
+	font-family: $font-family
+	font-size: $font-size-base
+
+.header
+	padding: 10px
+
+	img
+		float: left
+		width: 50px
+		height: 50px
+
+	.title
+		padding-top: 2px
+
+.window
+	.title
+		@include border
+		padding: 0 3px 0 3px
+
+	.content
+		@include border
+		font-size: 0.8em
+		margin-top: 5px
+		padding: 3px
+
+.label
+	font-weight: bold
+
+.value
+	font-size: 0.8em
+
+.stats
+	.stat
+		margin-bottom: 5px
+	.stat-s
+		.label
+			float: left
+			margin-right: 10px
+			width: 40%
+
+		.value
+			padding-top: 2px
+
+	.stat-s:after
+		content: ''
+		display: block
+		clear: both
+		margin-bottom: 2px
+
+#character
+	.window
+		width: 300px
+		float: left
+
+#equipment
+	.window
+		width: 400px
+		float: left
+	.slots
+		.slot
+			@include border
+			width: $equipment-slot-width
+			height: $equipment-slot-height
+		.row
+			margin-bottom: 3px
+
+			.group
+				margin: 0 auto 0 auto
+			.g1
+				width: calc(#{$equipment-slot-width} * 2)
+			.group:after
+				content: ''
+				display: table
+				clear: both
+		.helmet
+			margin: 0 auto 0 auto
+		.chest
+			float: left
+		.amulet
+			float: left

@@ -1,0 +1,77 @@
+html * {
+  margin: 0;
+  padding: 0; }
+html ul {
+  list-style: none; }
+
+body {
+  background-color: #111;
+  color: #ccc;
+  font-family: "MedievalSharp", cursive;
+  font-size: 22px; }
+
+.header {
+  padding: 10px; }
+  .header img {
+    float: left;
+    width: 50px;
+    height: 50px; }
+  .header .title {
+    padding-top: 2px; }
+
+.window .title {
+  border: 1px solid #ccc;
+  padding: 0 3px 0 3px; }
+.window .content {
+  border: 1px solid #ccc;
+  font-size: 0.8em;
+  margin-top: 5px;
+  padding: 3px; }
+
+.label {
+  font-weight: bold; }
+
+.value {
+  font-size: 0.8em; }
+
+.stats .stat {
+  margin-bottom: 5px; }
+.stats .stat-s .label {
+  float: left;
+  margin-right: 10px;
+  width: 40%; }
+.stats .stat-s .value {
+  padding-top: 2px; }
+.stats .stat-s:after {
+  content: "";
+  display: block;
+  clear: both;
+  margin-bottom: 2px; }
+
+#character .window {
+  width: 300px;
+  float: left; }
+
+#equipment .window {
+  width: 400px;
+  float: left; }
+#equipment .slots .slot {
+  border: 1px solid #ccc;
+  width: 40px;
+  height: 50px; }
+#equipment .slots .row {
+  margin-bottom: 3px; }
+  #equipment .slots .row .group {
+    margin: 0 auto 0 auto; }
+  #equipment .slots .row .g1 {
+    width: calc(40px * 2); }
+  #equipment .slots .row .group:after {
+    content: "";
+    display: table;
+    clear: both; }
+#equipment .slots .helmet {
+  margin: 0 auto 0 auto; }
+#equipment .slots .chest {
+  float: left; }
+#equipment .slots .amulet {
+  float: left; }

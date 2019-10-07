@@ -47,6 +47,7 @@ define(['util/random', 'model/game-data', 'model/item', 'model/item-mod'], (Rand
 	 * Create a unique item
 	 */
 	var transformToUnique = function(item, unique) {
+		log('Transforming to unique');
 		item.name = unique.name;
 		item.level = unique.minLevel;
 		item.armorStats = unique.armorStats;
@@ -78,7 +79,7 @@ define(['util/random', 'model/game-data', 'model/item', 'model/item-mod'], (Rand
 		}
 
 		randomItem() {
-			return this
+			var ret = this
 				.createItem()
 				.rollLevel()
 				.rollType()
@@ -87,6 +88,12 @@ define(['util/random', 'model/game-data', 'model/item', 'model/item-mod'], (Rand
 				.rollSubTypeStats()
 				.rollMods()
 				.rollName().item;
+
+			if (!ret) {
+				throw 'Could not roll item for spec';
+			}
+
+			return ret;
 		}
 
 		createItem() {
@@ -264,6 +271,10 @@ define(['util/random', 'model/game-data', 'model/item', 'model/item-mod'], (Rand
 
 			if (!this.item.level) {
 				throw 'Cannot generate mods on an item with no level';
+			}
+
+			if (this.item.rarity === Item.Rarities.UNIQUE) {
+				return this;
 			}
 
 			var base = GameData.itemGeneration.names.baseTypes[this.item.type];

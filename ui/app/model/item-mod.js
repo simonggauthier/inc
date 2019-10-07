@@ -7,7 +7,7 @@ define(['util/random'], (Random) => {
 			this.effect = {
 				description: data.effect.description,
 				values: [],
-				script: data.effect.script
+				'on-equip': data.effect['on-equip']
 			};
 
 			for (var k in data.effect.values) {
@@ -31,12 +31,21 @@ define(['util/random'], (Random) => {
 
 				this.name = this.name.replace('{' + i + '}', realValues[i]);
 				this.effect.description = this.effect.description.replace('{' + i + '}', realValues[i]);
-				this.effect.script = this.effect.script.replace('{' + i + '}', realValues[i]);
+
+				this.renderEffectEvent('on-equip', i, realValues[i]);
 			}
 
 			this.effect.values = realValues;
 
 			return this;
+		}
+
+		renderEffectEvent(event, i, value) {
+			if (!this.effect[event]) {
+				throw 'Mod ' + this.name + ' does not implement ' + event;
+			}
+
+			this.effect[event] = this.effect[event].replace('{' + i + '}', value);
 		}
 	}
 

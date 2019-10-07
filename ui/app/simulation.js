@@ -8,18 +8,51 @@ define(['model/character', 'model/game-data', 'model/item', 'model/item-generato
 
 		start() {
 			// Create a character
-			this.game.state.character = new Character.Character();
-			this.game.state.character.assignCharacterClass(GameData.characterClasses[0]);
+			this.game.state.character = new Character(GameData.characterClasses[0]);
 
 			this.game.update();
 
-			var itemGenerator = new ItemGenerator();
+			this.game.state.character.equipment.equip(new ItemGenerator({
+				type: Item.Types.HELMET,
+			}).randomItem(), 'helmet');
 
-			for (var i = 0; i < 100; i++) {
-				var item = itemGenerator.randomItem();
+			this.game.state.character.equipment.equip(new ItemGenerator({
+				type: Item.Types.AMULET
+			}).randomItem(), 'amulet');
 
-				log(item.toString() + '\n');
-			}
+			this.game.state.character.equipment.equip(new ItemGenerator({
+				type: Item.Types.ONE_HANDED_WEAPON
+			}).randomItem(), 'left-hand');
+
+			this.game.state.character.equipment.equip(new ItemGenerator({
+				type: Item.Types.ONE_HANDED_SHIELD
+			}).randomItem(), 'right-hand');
+
+			this.game.state.character.equipment.equip(new ItemGenerator({
+				type: Item.Types.CHEST
+			}).randomItem(), 'chest');
+
+			this.game.state.character.equipment.equip(new ItemGenerator({
+				type: Item.Types.BELT
+			}).randomItem(), 'belt');
+
+			this.game.state.character.equipment.equip(new ItemGenerator({
+				type: Item.Types.RING
+			}).randomItem(), 'left-ring');
+
+			this.game.state.character.equipment.equip(new ItemGenerator({
+				type: Item.Types.RING
+			}).randomItem(), 'right-ring');
+
+			this.game.state.character.equipment.equip(new ItemGenerator({
+				type: Item.Types.GLOVES
+			}).randomItem(), 'gloves');
+
+			this.game.state.character.equipment.equip(new ItemGenerator({
+				type: Item.Types.BOOTS
+			}).randomItem(), 'boots');
+
+			this.game.update();
 		}
 	};
 

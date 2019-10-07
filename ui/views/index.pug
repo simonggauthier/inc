@@ -9,7 +9,7 @@ html
 		link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=MedievalSharp&display=swap')
 
 		// Style
-		link(rel='stylesheet', href='/res/style/style.css')
+		link(rel='stylesheet', href='/res/css/style.css')
 
 		// Librairies
 		script(src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js')
@@ -35,7 +35,6 @@ html
 								.label Class
 								.value None
 							li.stat.attributes
-								.label Attributes
 								ul
 									li.stat-s.attribute.strength
 										.label Strength
@@ -52,6 +51,20 @@ html
 									li.stat-s.attribute.strength
 										.label Charisma
 										.value 0
+
+			#equipment
+				.window
+					.title Equipment
+
+					.content
+						.slots
+							.row
+								.slot.helmet
+							.row
+								.group.g1
+									.slot.chest
+									.slot.amulet
+						
 
 	script.
 		requirejs.config({

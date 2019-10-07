@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,CAAC;EACA,MAAM,EAAE,CAAC;EACT,OAAO,EAAE,CAAC;;AAEX,EAAE;EACD,UAAU,EAAE,IAAI",
+"sources": ["../sass/clear.sass"],
+"names": [],
+"file": "clear.css"
+}

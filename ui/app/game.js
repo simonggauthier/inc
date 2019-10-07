@@ -1,4 +1,4 @@
-define(['model/game-data', 'widgets/character-window'], (GameData, CharacterWindow) => {
+define(['model/game-data', 'widgets/character-window', 'widgets/equipment-window'], (GameData, CharacterWindow, EquipmentWindow) => {
 	'use strict';
 
 	class Game {
@@ -23,8 +23,6 @@ define(['model/game-data', 'widgets/character-window'], (GameData, CharacterWind
 		}
 
 		createWidgets() {
-			log('Creating widgets');
-
 			var t = this;
 
 			this.widgets.characterWindow = new CharacterWindow();
@@ -35,11 +33,11 @@ define(['model/game-data', 'widgets/character-window'], (GameData, CharacterWind
 					t.update();
 				}
 			});
+
+			this.widgets.equipmentWindow = new EquipmentWindow();
 		}
 
 		update() {
-			log('Updating game');
-
 			this.widgets.characterWindow.show(this.state.character);
 		}
 	}

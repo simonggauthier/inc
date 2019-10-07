@@ -2,7 +2,7 @@ define(['util/html', 'util/listener-list', 'widgets/button'], (html, ListenerLis
 	'use strict';
 
 	class CharacterWindow {
-		constructor () {
+		constructor() {
 			this.ui = {};
 			this.ui.$window = html.$find('#character .window');
 			this.ui.$stats = this.ui.$window.findChild('.stats');
@@ -21,20 +21,22 @@ define(['util/html', 'util/listener-list', 'widgets/button'], (html, ListenerLis
 			this.levelUpListeners = new ListenerList();
 		}
 
-		show (character) {
+		show(character) {
 			this.updateStat('level', character.level);
 			this.updateStat('class', character.characterClass.title);
 
-			for (var i = 0; i < character.attributes.array.length; i++) {
-				this.updateAttribute(i, character.attributes.array[i]);
+			var attributes = character.calculatedAttributes;
+
+			for (var i = 0; i < attributes.array.length; i++) {
+				this.updateAttribute(i, attributes.array[i]);
 			}
 		}
 
-		updateStat (name, value) {
+		updateStat(name, value) {
 			this.ui.$stats.findChild('.stat.' + name + ' .value').val(value);
 		}
 
-		updateAttribute (index, value) {
+		updateAttribute(index, value) {
 			this.ui.$attributes[index].findChild('.value').val(value);
 		}
 	}

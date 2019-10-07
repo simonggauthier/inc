@@ -2,18 +2,16 @@ define(() => {
 	'use strict';
 
 	class ListenerList {
-		constructor () {
+		constructor() {
 			this.listeners = [];
 		}
 
-		add (listener) {
+		add(listener) {
 			this.listeners.push(listener);
 		}
 
-		dispatch (event, model) {
+		dispatch(event, model) {
 			this.listeners.forEach((l) => {
-				log('Dispatching event ' + event);
-
 				l[event](model);
 			});
 		}

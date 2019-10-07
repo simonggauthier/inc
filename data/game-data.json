@@ -182,7 +182,7 @@
 						"min": 1,
 						"max": 4
 					}],
-					"script": "attributeStack.push('strength', {0})"
+					"on-equip": "pushAttribute('strength', {0})"
 				}
 			}, {
 				"type": "prefix",
@@ -194,7 +194,7 @@
 						"min": 4,
 						"max": 8
 					}],
-					"script": "attributeStack.push('strength', {0})"
+					"on-equip": "pushAttribute('strength', {0})"
 				}
 			}, {
 				"type": "prefix",
@@ -206,7 +206,7 @@
 						"min": 8,
 						"max": 12
 					}],
-					"script": "attributeStack.push('strength', {0})"
+					"on-equip": "pushAttribute('strength', {0})"
 				}
 			}, {
 				"type": "prefix",
@@ -218,7 +218,7 @@
 						"min": 1,
 						"max": 4
 					}],
-					"script": "attributeStack.push('intelligence', {0})"
+					"on-equip": "pushAttribute('intelligence', {0})"
 				}
 			}, {
 				"type": "prefix",
@@ -230,7 +230,7 @@
 						"min": 4,
 						"max": 8
 					}],
-					"script": "attributeStack.push('intelligence', {0})"
+					"on-equip": "pushAttribute('intelligence', {0})"
 				}
 			}, {
 				"type": "prefix",
@@ -242,7 +242,7 @@
 						"min": 8,
 						"max": 12
 					}],
-					"script": "attributeStack.push('intelligence', {0})"
+					"on-equip": "pushAttribute('intelligence', {0})"
 				}
 			}, {
 				"type": "suffix",
@@ -254,7 +254,7 @@
 						"min": 1,
 						"max": 4
 					}],
-					"script": "attributeStack.push('strength', {0})"
+					"on-equip": "pushAttribute('strength', {0})"
 				}
 			}, {
 				"type": "suffix",
@@ -266,7 +266,7 @@
 						"min": 4,
 						"max": 8
 					}],
-					"script": "attributeStack.push('strength', {0})"
+					"on-equip": "pushAttribute('strength', {0})"
 				}
 			}, {
 				"type": "suffix",
@@ -278,7 +278,7 @@
 						"min": 8,
 						"max": 12
 					}],
-					"script": "attributeStack.push('strength', {0})"
+					"on-equip": "pushAttribute('strength', {0})"
 				}
 			}, {
 				"type": "suffix",
@@ -290,7 +290,7 @@
 						"min": 1,
 						"max": 4
 					}],
-					"script": "attributeStack.push('intelligence', {0})"
+					"on-equip": "pushAttribute('intelligence', {0})"
 				}
 			}, {
 				"type": "suffix",
@@ -302,7 +302,7 @@
 						"min": 4,
 						"max": 8
 					}],
-					"script": "attributeStack.push('intelligence', {0})"
+					"on-equip": "pushAttribute('intelligence', {0})"
 				}
 			}, {
 				"type": "suffix",
@@ -314,7 +314,7 @@
 						"min": 8,
 						"max": 12
 					}],
-					"script": "attributeStack.push('intelligence', {0})"
+					"on-equip": "pushAttribute('intelligence', {0})"
 				}
 			}, {
 				"type": "prefix",
@@ -323,7 +323,7 @@
 				"effect": {
 					"description": "+{0} to all attributes",
 					"values": [10],
-					"script": "attributeStack.pushAll({0})"
+					"on-equip": "pushAllAttributes({0})"
 				}
 			}, {
 				"type": "prefix",
@@ -332,7 +332,7 @@
 				"effect": {
 					"description": "Increase title rank",
 					"values": [1],
-					"script": "specialAttributeStack.push('titleRank', {0})"
+					"on-equip": "pushSpecialAttribute('titleRank', {0})"
 				}
 			}],
 

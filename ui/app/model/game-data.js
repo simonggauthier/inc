@@ -1,4 +1,4 @@
-define(['util/http', 'model/character'], (Http, Character) => {
+define(['util/http', 'model/character-class'], (Http, CharacterClass) => {
 	'use strict';
 
 	class GameData {
@@ -32,15 +32,11 @@ define(['util/http', 'model/character'], (Http, Character) => {
 		parse(gameData) {
 			var t = this;
 
-			log('Parsing character classes');
-
 			gameData.characterClasses.forEach((classData) => {
-				var c = new Character.CharacterClass(classData);
+				var c = new CharacterClass(classData);
 
 				t.characterClasses.push(c);
 			});
-
-			log('Parsing item generation');
 
 			this.itemGeneration = gameData.itemGeneration;
 		}
